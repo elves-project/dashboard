@@ -1,0 +1,45 @@
+
+.chart {
+  position: relative;
+  display: inline-block;
+  width: 70px;
+  height: 70px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  text-align: center;
+}
+.chart canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 70px !important;
+  width: 70px !important;;
+}
+.percent {
+  display: inline-block;
+  line-height: 70px;
+  z-index: 2;
+}
+.percent:after {
+  content: '%';
+  margin-left: 0.2em;
+  font-size: .8em;
+}
+.angular {
+  margin-top: 80px;
+}
+.angular .chart {
+  margin-top: 0;
+}
+input {
+  display: block;
+  margin: auto;
+  margin-bottom: 3em;
+}
+
+.span6 {
+  float: left;
+  width: 50%;
+}
+
+
