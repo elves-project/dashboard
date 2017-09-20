@@ -62,26 +62,26 @@ public class DashboardServiceImpl implements DashboardService{
             List<String> schedulerList=ZookeeperExcutor.getClient().getChildren().forPath("/elves_v2/scheduler");
             List<String> heartbeatList=ZookeeperExcutor.getClient().getChildren().forPath("/elves_v2/heartbeat");
             List<String> supervisorList=ZookeeperExcutor.getClient().getChildren().forPath("/elves_v2/supervisor");
-            List<String> openapiList=ZookeeperExcutor.getClient().getChildren().forPath("/elves_v2/openapi");
+            List<String> apiList=ZookeeperExcutor.getClient().getChildren().forPath("/elves_v2/openapi");
 
             Map<String,Integer> st=new HashMap<String,Integer>();
             if(cronList!=null&&cronList.size()>0){
                 st.put("cron",cronList.size());
             }
             if(queueList!=null&&queueList.size()>0){
-                st.put("queue",cronList.size());
+                st.put("queue",queueList.size());
             }
             if(schedulerList!=null&&schedulerList.size()>0){
-                st.put("scheduler",cronList.size());
+                st.put("scheduler",schedulerList.size());
             }
             if(heartbeatList!=null&&heartbeatList.size()>0){
-                st.put("heartbeat",cronList.size());
+                st.put("heartbeat",heartbeatList.size());
             }
             if(supervisorList!=null&&supervisorList.size()>0){
-                st.put("supervisor",cronList.size());
+                st.put("supervisor",supervisorList.size());
             }
-            if(openapiList!=null&&openapiList.size()>0){
-                st.put("openapi",cronList.size());
+            if(apiList!=null&&apiList.size()>0){
+                st.put("openapi",apiList.size());
             }
             data.put("status",st);
         }catch (Exception e){
@@ -154,13 +154,6 @@ public class DashboardServiceImpl implements DashboardService{
 
     @Override
     public List<ElvesMqMessage> searchElvesData(String fromModule,String toModule) {
-        for(int i=0;i<100;i++){
-            ElvesMqMessage e =new ElvesMqMessage();
-            e.setFromModule("opeanapi");
-            e.setToModule("scheduler");
-            addElvesDataToCache(e);
-        }
-
         CacheManager cacheManager = CacheManager.create(getClass().getResource("/ehcache.xml"));
         Cache elvesCache = cacheManager.getCache("elvesCache");
 
@@ -186,7 +179,6 @@ public class DashboardServiceImpl implements DashboardService{
         List<ElvesMqMessage> back=new ArrayList<ElvesMqMessage>();
         for(Result rs:resultList){
             Object obj=rs.getValue();
-            LOG.info(obj.toString());
             ElvesMqMessage msg=(ElvesMqMessage)rs.getValue();
             back.add(msg);
         }

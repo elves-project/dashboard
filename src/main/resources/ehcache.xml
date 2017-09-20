@@ -2,7 +2,7 @@
 <ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:noNamespaceSchemaLocation="ehcache.xsd">
 <!-- 指定一个文件目录，当EhCache把数据写到硬盘上时，将把数据写到这个文件目录下 -->
-    <!--<diskStore path="Java.io.tmpdir"/>-->
+    <diskStore path="e://cache.text"/>
 
     <!-- 设定缓存的默认数据过期策略
         name：缓存名称
@@ -18,27 +18,15 @@
         timeToLiveSeconds：设定对象允许存在于缓存中的最长时间，以秒为单位。当对象自从被存放到缓存中后，如果处于缓存中的时间超过了 timeToLiveSeconds属性值，这个对象就会过期，EHCache将把它从缓存中清除。只有当eternal属性为false，该属性才有 效。如果该属性值为0，则表示对象可以无限期地存在于缓存中。timeToLiveSeconds必须大于timeToIdleSeconds属性，才有意义
         memoryStoreEvictionPolicy：当达到maxElementsInMemory限制时，Ehcache将会根据指定的策略去清理内存。可选策略有：LRU（最近最少使用，默认策略）、FIFO（先进先出）、LFU（最少访问次数）。
     -->
-    <defaultCache
-            maxEntriesLocalHeap="10000"
-            eternal="false"
-            overflowToDisk="false"
-            timeToIdleSeconds="120"
-            timeToLiveSeconds="120"
-            diskSpoolBufferSizeMB="30"
-            maxEntriesLocalDisk="10000000"
-            diskExpiryThreadIntervalSeconds="120"
-            memoryStoreEvictionPolicy="LRU">
-        <persistence strategy="localTempSwap"/>
-    </defaultCache>
 
     <cache name="elvesCache"
-           maxEntriesLocalHeap="10000"
-           maxEntriesLocalDisk="1000"
+           maxElementsInMemory="1000000"
+           maxEntriesLocalDisk="1000000"
            eternal="false"
            diskSpoolBufferSizeMB="30"
-           timeToIdleSeconds="300"
+           timeToIdleSeconds="600"
            timeToLiveSeconds="600"
-           memoryStoreEvictionPolicy="LFU"
+           memoryStoreEvictionPolicy="FIFO"
            transactionalMode="off">
         <searchable allowDynamicIndexing="true">
             <searchAttribute name="fromModule" expression="value.getFromModule()"/>
