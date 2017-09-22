@@ -31,4 +31,5 @@ dependency-reduced-pom.xml
 *.iws  
 *.idea  
 src/main/resources/conf.properties
+src/main/resources/log4j.properties
 src/main/java/test/
