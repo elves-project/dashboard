@@ -13,6 +13,8 @@
 <!--layer-->
 <script src="${ctx}/resources/plugin/layer-3.0.3/layer.js"></script>
 
+<script src="${ctx}/resources/plugin/date.js"></script>
+
 <!--echarts-->
 <script src="${ctx}/resources/plugin/echarts/echarts.common.min.js"></script>
 <script src="${ctx}/resources/plugin/echarts/dark.js"></script>

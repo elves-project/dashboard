@@ -1,6 +1,7 @@
 package cn.gyyx.elves.dashboard.controller;
 
 import cn.gyyx.elves.dashboard.service.DashboardService;
+import cn.gyyx.elves.util.JsonFilter;
 import cn.gyyx.elves.util.mq.MessageProducer;
 import com.alibaba.fastjson.JSON;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,10 +55,10 @@ public class DashboardController {
 
     @RequestMapping("/statistics")
     @ResponseBody
-    public String statisticsElvesData(String fromModule,String toModule){
-        Map<String,Object> map=new HashMap<String,Object>();
-        map.put("data",dashboardServiceImpl.searchElvesData(fromModule,toModule));
-        return JSON.toJSONString(map);
+    public String statisticsElvesData(String toModule,String endTime,int seconds){
+        Map<String,Object> rs=dashboardServiceImpl.searchElvesDataSize(toModule,endTime,seconds);
+
+        return JSON.toJSONString(rs, JsonFilter.filter);
     }
 
     @RequestMapping("/appData")

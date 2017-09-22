@@ -1,5 +1,6 @@
 package cn.gyyx.elves.util.mq;
 
+import cn.gyyx.elves.util.DateUtils;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
 
@@ -43,7 +44,8 @@ public class ElvesMqMessage implements Serializable{
      */
     private Map<String,Object> mqbody;
 
-    public ElvesMqMessage(){}
+
+    private String timestamp;//时间  hh:mm:ss
 
     private ElvesMqMessage(Map<String,Object> elvesMsg){
         parse(elvesMsg);
@@ -73,6 +75,7 @@ public class ElvesMqMessage implements Serializable{
         this.fromModule = mqkey.split("[.]")[0];
         this.toModule = mqkey.split("[.]")[1];
         this.action = mqkey.split("[.]")[2];
+        this.setTimestamp(DateUtils.currentTimestamp2String("HH:mm:ss"));
     }
 
 
@@ -153,5 +156,14 @@ public class ElvesMqMessage implements Serializable{
         } catch (Exception e) {
             return false;
         }
+    }
+
+
+    public String getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(String timestamp) {
+        this.timestamp = timestamp;
     }
 }
