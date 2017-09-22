@@ -18,153 +18,172 @@
         <!--charts start-->
         <div class="col-md-6 ">
             <div class="panel">
-                <div id="main1" style="height:240px;"></div>
+                <div id="supervisor" style="height:240px;"></div>
             </div>
         </div>
         <div class="col-md-6 ">
             <div class="panel">
-                <div id="main2" style="height:240px;"></div>
+                <div id="scheduler" style="height:240px;"></div>
             </div>
         </div>
 
         <div class="col-md-6 ">
             <div class="panel">
-                <div id="main3" style="height:240px;"></div>
+                <div id="queue" style="height:240px;"></div>
             </div>
         </div>
         <div class="col-md-6 ">
             <div class="panel">
-                <div id="main4" style="height:240px;"></div>
+                <div id="cron" style="height:240px;"></div>
+            </div>
+        </div>
+        <div class="col-md-6 ">
+            <div class="panel">
+                <div id="heartbeat" style="height:240px;"></div>
+            </div>
+        </div>
+        <div class="col-md-6 ">
+            <div class="panel">
+                <div id="dashboard" style="height:240px;"></div>
             </div>
         </div>
     </div>
 </div>
 <script>
-    var data = [];
-    var now = +new Date(2017, 9, 3);
-    var oneDay = 24 * 3600 * 1000;
-    var value = Math.random() * 1000;
-
     $(function () {
         $(document).on('click', '.yamm .dropdown-menu', function(e) {
             e.stopPropagation()
         });
-        initEcharts();
+        initEcharts('supervisor');
+        initEcharts('scheduler');
+        initEcharts('queue');
+        initEcharts('cron');
+        initEcharts('heartbeat');
+        initEcharts('dashboard');
     });
 
-    function initEcharts() {
-        for (var i = 0; i < 1000; i++) {
-            data.push(randomData());
-        }
-        option = {
+    function initEcharts(moduleId) {
+        var option = {
             title: {
-                text: 'Elves-Openapi监控'
+                text: moduleId+'监控',
             },
             tooltip: {
                 trigger: 'axis',
-                formatter: function (params) {
-                    params = params[0];
-                    var date = new Date(params.name);
-                    return date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear() + ' : ' + params.value[1];
-                },
                 axisPointer: {
-                    animation: false
+                    type: 'cross',
+                    label: {
+                        backgroundColor: '#283b56'
+                    }
                 }
             },
-            xAxis: {
-                type: 'time',
-                splitLine: {
-                    show: false
+            legend: {
+                data:['消费总数','每秒消费速度']
+            },
+            toolbox: {
+                show: true,
+                feature: {
+                    dataView: {readOnly: false},
+                    restore: {},
+                    saveAsImage: {}
                 }
             },
-            yAxis: {
-                type: 'value',
-                boundaryGap: [0, '100%'],
-                splitLine: {
-                    show: false
-                }
+            dataZoom: {
+                show: false,
+                start: 0,
+                end: 100
             },
-            series: [{
-                name: '模拟数据',
-                type: 'line',
-                showSymbol: false,
-                hoverAnimation: false,
-                data: data
-            }]
-        };
-
-
-        var myChart1 = echarts.init(document.getElementById('main1'),"dark");
-        myChart1.setOption(option);
-        setInterval(function () {
-            for (var i = 0; i < 5; i++) {
-                data.shift();
-                data.push(randomData());
-            }
-            myChart1.setOption({
-                series: [{
-                    data: data
-                }]
-            });
-        }, 2000);
-
-        var myChart2 = echarts.init(document.getElementById('main2'),"dark");
-        myChart2.setOption(option);
-        setInterval(function () {
-            for (var i = 0; i < 5; i++) {
-                data.shift();
-                data.push(randomData());
-            }
-            myChart2.setOption({
-                series: [{
-                    data: data
-                }]
-            });
-        }, 2000);
-
-        var myChart3 = echarts.init(document.getElementById('main3'),"dark");
-        myChart3.setOption(option);
-        setInterval(function () {
-            for (var i = 0; i < 5; i++) {
-                data.shift();
-                data.push(randomData());
-            }
-            myChart3.setOption({
-                series: [{
-                    data: data
-                }]
-            });
-        }, 2000);
-
-        var myChart4 = echarts.init(document.getElementById('main4'),"dark");
-        myChart4.setOption(option);
-        setInterval(function () {
-            for (var i = 0; i < 5; i++) {
-                data.shift();
-                data.push(randomData());
-            }
-            myChart4.setOption({
-                series: [{
-                    data: data
-                }]
-            });
-        }, 2000);
-    }
-
-
-
-    function randomData() {
-        now = new Date(+now + oneDay);
-        value = value + Math.random() * 21 - 10;
-        return {
-            name: now.toString(),
-            value: [
-                [now.getFullYear(), now.getMonth() + 1, now.getDate()].join('/'),
-                Math.round(value)
+            xAxis: [
+                {
+                    type: 'category',
+                    boundaryGap: true,
+                    data: (function (){
+                        var now = new Date();
+                        var res = [];
+                        var len = 5;
+                        while (len--) {
+                            res.unshift(new Date().pattern("hh:mm:ss"));
+                            now = new Date(now - 2000);
+                        }
+                        return res;
+                    })()
+                }
+            ],
+            yAxis: [
+                {
+                    type: 'value',
+                    scale: true,
+                    name: '消息条数',
+                    min: 0,
+                    boundaryGap: [0.2, 0.2]
+                }
+            ],
+            series: [
+                {
+                    name:'消费总数',
+                    type:'line',
+                    data:(function (){
+                        var res = [];
+                        var len = 5;
+                        while (len--) {
+                            res.push("");
+                        }
+                        return res;
+                    })()
+                },
+                {
+                    name:'每秒消费速度',
+                    type:'line',
+                    data:(function (){
+                        var res = [];
+                        var len = 5;
+                        while (len--) {
+                            res.push("");
+                        }
+                        return res;
+                    })()
+                }
             ]
-        }
+        };
+        var myChart = echarts.init(document.getElementById(moduleId),"dark");
+        myChart.setOption(option);
+
+        setInterval(function () {
+            var axisData = new Date().pattern("hh:mm:ss");
+
+            var back=getModuleData(moduleId,axisData);
+
+            var data0 = option.series[0].data;
+            var data1 = option.series[1].data;
+
+            data0.shift();
+            data0.push(back.count);
+            data1.shift();
+            data1.push(back.avg);
+
+            option.xAxis[0].data.shift();
+            option.xAxis[0].data.push(axisData);
+
+            myChart.setOption(option);
+        }, 2000);
     }
 
-
+    function getModuleData(module,time){
+        var num={};
+        $.ajax({
+            url:_ctx+"/statistics",
+            type:"get",
+            data:{'toModule':module,'endTime':time,'seconds':2},
+            dataType:'json',
+            success:function(data){
+                num=data;
+            },
+            error:function () {
+                num=data;
+            },
+            async:false
+        });
+        return num;
+    }
 </script>
+
 

@@ -144,8 +144,8 @@
     </dependencies>
 
     <build>
-        <directory>../../bin</directory>
-        <finalName>service</finalName>
+        <!--<directory>../../bin</directory>
+        <finalName>service</finalName>-->
         <resources>
             <resource>
                 <directory>src/main/java</directory>

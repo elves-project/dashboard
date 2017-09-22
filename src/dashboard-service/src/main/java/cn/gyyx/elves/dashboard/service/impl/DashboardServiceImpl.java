@@ -2,19 +2,17 @@ package cn.gyyx.elves.dashboard.service.impl;
 
 import cn.gyyx.elves.dashboard.model.AgentInfo;
 import cn.gyyx.elves.dashboard.service.DashboardService;
+import cn.gyyx.elves.util.DateUtils;
 import cn.gyyx.elves.util.ExceptionUtil;
 import cn.gyyx.elves.util.HttpUtil;
 import cn.gyyx.elves.util.mq.ElvesMqMessage;
 import cn.gyyx.elves.util.mq.MessageProducer;
+import cn.gyyx.elves.util.mq.cache.EhcacheHelper;
 import cn.gyyx.elves.util.zk.ZookeeperExcutor;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
 import net.sf.ehcache.Cache;
 import net.sf.ehcache.CacheManager;
-import net.sf.ehcache.Element;
-import net.sf.ehcache.search.Attribute;
-import net.sf.ehcache.search.Query;
-import net.sf.ehcache.search.Result;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,8 +25,16 @@ import java.util.*;
  * @Description :
  * @Date : Created in  2017/8/21 10:31
  */
-@Service
+@Service("elvesConsumerService")
 public class DashboardServiceImpl implements DashboardService{
+
+    public static Cache elvesCache ;
+
+    static {
+        CacheManager cacheManager = CacheManager.create(DashboardServiceImpl.class.getResource("/ehcache.xml"));
+        elvesCache = cacheManager.getCache("elvesCache");
+    }
+
 
     private static final Logger LOG= org.slf4j.LoggerFactory.getLogger(DashboardServiceImpl.class);
 
@@ -140,57 +146,17 @@ public class DashboardServiceImpl implements DashboardService{
     }
 
     @Override
-    public void addElvesDataToCache(ElvesMqMessage msg) {
-        CacheManager cacheManager = CacheManager.create(getClass().getResource("/ehcache.xml"));
-        Cache elvesCache = cacheManager.getCache("elvesCache");
-        if(elvesCache!=null){
-            String key = UUID.randomUUID().toString();
-            elvesCache.put(new Element(key, msg));
-            LOG.info("save elves data to ehcache success");
-        }else{
-            LOG.error("elvesCache is null");
-        }
-    }
+    public Map<String,Object> searchElvesDataSize(String toModule,String endTime,int seconds) {
+        Map<String,Object> rs=new HashMap<String,Object>();
 
-    @Override
-    public List<ElvesMqMessage> searchElvesData(String fromModule,String toModule) {
-        CacheManager cacheManager = CacheManager.create(getClass().getResource("/ehcache.xml"));
-        Cache elvesCache = cacheManager.getCache("elvesCache");
+        List<ElvesMqMessage> count= EhcacheHelper.find(null,toModule);
+        rs.put("count",count==null?0:count.size());
 
-        Query query = elvesCache.createQuery();
-        query.includeValues();
-        query.includeKeys();
+        long start=DateUtils.string2Date(endTime,"HH:mm:ss").getTime()-seconds*1000;
+        String startStr=DateUtils.date2String(new Date(start),"HH:mm:ss");
+        List<ElvesMqMessage> avgSum= EhcacheHelper.findByTime(toModule,startStr,endTime);
+        rs.put("avg",avgSum==null?0:avgSum.size()/2);
 
-        if(StringUtils.isNotBlank(fromModule)){
-            Attribute<String> fromModuleAttr = elvesCache.getSearchAttribute("fromModule");
-            query.addCriteria(fromModuleAttr.eq(fromModule));
-            query.includeAttribute(fromModuleAttr);
-        }
-
-        if(StringUtils.isNotBlank(toModule)){
-            Attribute<String> toModuleAttr = elvesCache.getSearchAttribute("toModule");
-            query.addCriteria(toModuleAttr.eq(toModule));
-            query.includeAttribute(toModuleAttr);
-        }
-
-
-        List<Result> resultList=query.execute().all();
-
-        List<ElvesMqMessage> back=new ArrayList<ElvesMqMessage>();
-        for(Result rs:resultList){
-            Object obj=rs.getValue();
-            ElvesMqMessage msg=(ElvesMqMessage)rs.getValue();
-            back.add(msg);
-        }
-
-//        if(resultList != null && !resultList.isEmpty()){
-//            Result result = resultList.get(0);
-//            //多个统计信息将会组成一个List进行返回
-//            List<Object> aggregatorResults = result.getAggregatorResults();
-//            Number averageAge = (Number)aggregatorResults.get(0);
-//            Integer maxAge = (Integer)aggregatorResults.get(1);
-//            System.out.println(averageAge + "---" + maxAge);
-//        }
-        return  back;
+        return rs;
     }
 }

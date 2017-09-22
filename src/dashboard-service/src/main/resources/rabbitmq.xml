@@ -23,7 +23,7 @@
         </rabbit:bindings>
     </rabbit:topic-exchange>
     
-    <rabbit:listener-container connection-factory="connectionFactory" concurrency="5" prefetch="100" acknowledge="auto" >
+    <rabbit:listener-container connection-factory="connectionFactory" concurrency="10" prefetch="1000" acknowledge="auto" >
         <rabbit:listener ref="messageHandler" queues="dashboard" />
     </rabbit:listener-container>
   	

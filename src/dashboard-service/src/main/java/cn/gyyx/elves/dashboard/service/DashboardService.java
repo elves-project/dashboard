@@ -1,7 +1,6 @@
 package cn.gyyx.elves.dashboard.service;
 
 import cn.gyyx.elves.dashboard.model.AgentInfo;
-import cn.gyyx.elves.util.mq.ElvesMqMessage;
 
 import java.util.List;
 import java.util.Map;
@@ -19,8 +18,6 @@ public interface DashboardService {
 
     public List<Map<String,String>> getAppData();
 
-    public void addElvesDataToCache(ElvesMqMessage msg);
-
-    public List<ElvesMqMessage> searchElvesData(String fromModule,String toModule);
+    public Map<String,Object> searchElvesDataSize(String toModule,String endTime,int seconds);
 
 }
