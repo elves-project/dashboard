@@ -8,7 +8,7 @@
     <description>Spring MVC Configuration</description>
    
     <!-- 加载配置属性文件 -->
-	<!--<bean id="customConfigLoader" class="cn.gyyx.elves.util.CustomPropertyPlaceholderConfigurer"/>-->
+	<bean id="customConfigLoader" class="cn.gyyx.elves.util.CustomPropertyPlaceholderConfigurer"/>
 
     <context:property-placeholder ignore-unresolvable="true" location="classpath:conf.properties" />
 

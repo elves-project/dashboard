@@ -2,8 +2,10 @@ package cn.gyyx.elves.util;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.config.PropertyPlaceholderConfigurer;
-import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
+
+import java.io.File;
 
 /**
  * @ClassName: CustomPropertyPlaceholderConfigurer
@@ -23,21 +25,12 @@ public class CustomPropertyPlaceholderConfigurer extends PropertyPlaceholderConf
 	
 	public CustomPropertyPlaceholderConfigurer() {
 		super();
-//		String openapiPath=System.getProperty("SUPERVISOR_PATH");
-//		LOG.info("get supervisor path :" +openapiPath);
-//		//初始化，加载  {path}/conf.property 的配置文件
-//		Resource location=new FileSystemResource(openapiPath+ File.separator+"conf"+File.separator+"conf.properties");
+        String confPath=System.getProperty("CONF_PATH");
+        LOG.info("get conf path :" +confPath);
+        //初始化，加载  {path}/conf.property 的配置文件
+        Resource location=new FileSystemResource(confPath+ File.separator+"conf"+File.separator+"conf.properties");
+        this.locations = new Resource[]{location};
+        super.setLocation(location);
 
-        Resource location=new ClassPathResource("conf.properties");
-
-		this.locations = new Resource[]{location};
-		super.setLocation(location);
 	}
-	
-	public void addGlobalProperty() {
-//        Properties properties = new Properties();
-//        properties.setProperty("mybatis.path","");
-//        //关键方法,调用的PropertyPlaceholderConfigurer中的方法,通过这个方法将自定义加载的properties文件加入spring中
-//        this.setProperties(properties);
-    } 
 }
