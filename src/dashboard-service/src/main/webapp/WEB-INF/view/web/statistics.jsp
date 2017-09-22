@@ -54,12 +54,14 @@
         $(document).on('click', '.yamm .dropdown-menu', function(e) {
             e.stopPropagation()
         });
+        var index = layer.load(1, {shade: false});
         initEcharts('supervisor');
         initEcharts('scheduler');
         initEcharts('queue');
         initEcharts('cron');
         initEcharts('heartbeat');
         initEcharts('dashboard');
+        layer.close(index);
     });
 
     function initEcharts(moduleId) {
