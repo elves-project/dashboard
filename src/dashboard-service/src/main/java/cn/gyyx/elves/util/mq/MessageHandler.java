@@ -22,7 +22,7 @@ public class MessageHandler implements MessageListener {
     @Override
     public void onMessage(Message message) {
         try {
-            LOG.info("MessageHandler reveive mq message and submit to MessageProcesserThread："+message);
+            LOG.debug("MessageHandler reveive mq message and submit to MessageProcesserThread："+message);
             new Thread(new MessageProcesserThread(messageProducer, message)).start();
         } catch (Exception e) {
             LOG.error("MessageHandler error ："+ExceptionUtil.getStackTraceAsString(e));

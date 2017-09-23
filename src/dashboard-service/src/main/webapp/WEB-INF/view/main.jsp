@@ -44,6 +44,8 @@
     </div>
 </div>
 <script>
+    var allIntervalIds=[];
+
     $(function () {
         $(document).on('click', '.yamm .dropdown-menu', function (e) {
             e.stopPropagation()
@@ -52,6 +54,12 @@
     });
 
     function loadContent(url) {
+        //清空所有的js定时周期任务
+        if(url.indexOf("statistics")!=-1){
+            for(var item in allIntervalIds){
+                clearInterval(allIntervalIds[item]);
+            }
+        }
         $.ajax({
             url:_ctx+url,
             type:'get',
@@ -60,6 +68,11 @@
                 $("#rightDiv").html(data);
             }
         });
+    }
+
+    //定时任务的添加
+    function addTask(intervalId){
+        allIntervalIds.push(intervalId);
     }
 </script>
 </body>

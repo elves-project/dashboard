@@ -29,7 +29,7 @@
                             </a>
                         </li>
 
-                        <li class="dropdown">
+                        <%--<li class="dropdown">
                             <a class="dropdown-toggle" href="javascript:void(0);" data-toggle="dropdown" data-hover="dropdown" data-submenu>
                                 任务查询 <span class="fa fa-angle-down"></span>
                             </a>
@@ -39,7 +39,7 @@
                                 <li><a tabindex="1" href="javascript:void(0);" ><i class="fa fa-compass"></i>队列任务</a></li>
                                 <li><a tabindex="2" href="javascript:void(0);" ><i class="fa fa-dashboard"></i>计划任务</a></li>
                             </ul>
-                        </li>
+                        </li>--%>
                     </ul>
 
                 </div>

@@ -29,7 +29,7 @@ public class MessageProcesserThread implements Runnable{
 
     @Override
     public void run() {
-        LOG.info("MessageProcesserThread process message start...");
+        LOG.debug("MessageProcesserThread process message start...");
         try {
             byte [] body=message.getBody();
             if(null==body){

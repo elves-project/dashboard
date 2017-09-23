@@ -29,4 +29,5 @@ hs_err_pid*
 .project
 .idea
 /bin
+/conf/conf.properties
 elves-dashboard.iml

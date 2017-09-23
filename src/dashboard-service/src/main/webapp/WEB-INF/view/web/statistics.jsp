@@ -149,7 +149,7 @@
         var myChart = echarts.init(document.getElementById(moduleId),"dark");
         myChart.setOption(option);
 
-        setInterval(function () {
+        var intervalId= setInterval(function () {
             var axisData = new Date().pattern("hh:mm:ss");
 
             var back=getModuleData(moduleId,axisData);
@@ -167,6 +167,7 @@
 
             myChart.setOption(option);
         }, 2000);
+        addTask(intervalId);
     }
 
     function getModuleData(module,time){
