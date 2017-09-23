@@ -15,7 +15,7 @@
 	<!--topic 匹配传输-->  
     <rabbit:template id="topicTemplate"  connection-factory="connectionFactory" exchange="${mq.exchange}"/>
 
-    <rabbit:queue name="dashboard" durable="true"  exclusive="false" />
+    <rabbit:queue name="dashboard" auto-delete="true"/>
 
     <rabbit:topic-exchange name="${mq.exchange}">
         <rabbit:bindings> 

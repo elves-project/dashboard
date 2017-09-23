@@ -25,12 +25,10 @@ public class CustomPropertyPlaceholderConfigurer extends PropertyPlaceholderConf
 	
 	public CustomPropertyPlaceholderConfigurer() {
 		super();
-        String confPath=System.getProperty("CONF_PATH");
-        LOG.info("get conf path :" +confPath);
-        //初始化，加载  {path}/conf.property 的配置文件
-        Resource location=new FileSystemResource(confPath+ File.separator+"conf"+File.separator+"conf.properties");
+        String projectPath=System.getProperty("PROJECT_PATH");
+        LOG.info("get project path :" +projectPath);
+        Resource location=new FileSystemResource(projectPath+ File.separator+"conf"+File.separator+"conf.properties");
         this.locations = new Resource[]{location};
         super.setLocation(location);
-
 	}
 }

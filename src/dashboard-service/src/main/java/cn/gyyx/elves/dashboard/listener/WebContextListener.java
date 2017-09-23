@@ -20,11 +20,11 @@ public class WebContextListener extends ContextLoaderListener {
     @Override
     public WebApplicationContext initWebApplicationContext(ServletContext servletContext) {
 
-        String confPath =System.getProperty("CONF_PATH");
+        String projectPath =System.getProperty("PROJECT_PATH");
 
-        SpringUtil.PROPERTIES_CONFIG_PATH=confPath+ File.separator+"conf"+File.separator+"conf.properties";
+        SpringUtil.PROPERTIES_CONFIG_PATH=projectPath+ File.separator+"conf"+File.separator+"conf.properties";
 
-        PropertyConfigurator.configure(confPath+File.separator+"conf"+File.separator+"log4j.properties");
+        PropertyConfigurator.configure(projectPath+File.separator+"conf"+File.separator+"log4j.properties");
 
         LOG.info("conf.properties path :"+ SpringUtil.PROPERTIES_CONFIG_PATH);
 

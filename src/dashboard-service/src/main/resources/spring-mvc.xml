@@ -7,11 +7,6 @@
     
     <description>Spring MVC Configuration</description>
    
-    <!-- 加载配置属性文件 -->
-	<bean id="customConfigLoader" class="cn.gyyx.elves.util.CustomPropertyPlaceholderConfigurer"/>
-
-    <context:property-placeholder ignore-unresolvable="true" location="classpath:conf.properties" />
-
 	<!-- 使用Annotation自动注册Bean,只扫描@Controller -->
 	<context:component-scan base-package="cn.gyyx" use-default-filters="false"><!-- base-package 如果多个，用“,”分隔 -->
 		<context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>

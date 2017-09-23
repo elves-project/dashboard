@@ -18,7 +18,7 @@ public class ProgramEntrance {
      * 添加系统环境变量，供server.war 寻找配置文件路径
      */
     public static void  addSystemProperties(String path){
-        System.setProperty("CONF_PATH",path);
+        System.setProperty("PROJECT_PATH",path);
     }
 
     /**
