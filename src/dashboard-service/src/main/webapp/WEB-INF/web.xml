@@ -8,9 +8,6 @@
         <param-value>classpath:/spring.xml</param-value>
     </context-param>
     <listener>
-        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
-    </listener>
-    <listener>
         <listener-class>cn.gyyx.elves.dashboard.listener.WebContextListener</listener-class>
     </listener>
     <listener>
