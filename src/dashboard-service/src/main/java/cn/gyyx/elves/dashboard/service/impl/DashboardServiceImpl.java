@@ -7,6 +7,7 @@ import cn.gyyx.elves.util.ExceptionUtil;
 import cn.gyyx.elves.util.HttpUtil;
 import cn.gyyx.elves.util.mq.ElvesMqMessage;
 import cn.gyyx.elves.util.mq.MessageProducer;
+import cn.gyyx.elves.util.mq.PropertyLoader;
 import cn.gyyx.elves.util.mq.cache.EhcacheHelper;
 import cn.gyyx.elves.util.zk.ZookeeperExcutor;
 import com.alibaba.fastjson.JSON;
@@ -99,8 +100,7 @@ public class DashboardServiceImpl implements DashboardService{
 
     @Override
     public List<AgentInfo> getAgents() {
-        String syncUrl="";
-        String result= HttpUtil.sendGet(syncUrl,null);
+        String result= HttpUtil.sendGet(PropertyLoader.AGENT_INTERFACE_URL,null);
 
         List<AgentInfo> dt=new ArrayList<>();
         if(StringUtils.isNotBlank(result)){

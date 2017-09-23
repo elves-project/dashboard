@@ -51,12 +51,10 @@ public class PropertyLoader {
 	//rpc exchange name
 	public static String MQ_EXCHANGE;
 	
-	public static String FTP_RES_IP;
-	
-	public static String FTP_RES_USER;
-	
-	public static String FTP_RES_PASS;
-	
+
+	//agent interface url
+	public static String AGENT_INTERFACE_URL;
+
 	static {
 		try {
 			is =  new FileInputStream(SpringUtil.PROPERTIES_CONFIG_PATH);
@@ -72,11 +70,8 @@ public class PropertyLoader {
     		MQ_USER = properties.getProperty("mq.user");
     		MQ_PASSWORD = properties.getProperty("mq.password");
     		MQ_EXCHANGE = properties.getProperty("mq.exchange");
-    		
-    		FTP_RES_IP = properties.getProperty("ftp.res.ip");
-    		FTP_RES_USER = properties.getProperty("ftp.res.user");
-    		FTP_RES_PASS = properties.getProperty("ftp.res.pass");
-    		
+
+            AGENT_INTERFACE_URL = properties.getProperty("agent.interface.url");
 		} catch (IOException e) {
 			LOG.error(ExceptionUtil.getStackTraceAsString(e));
 		}
