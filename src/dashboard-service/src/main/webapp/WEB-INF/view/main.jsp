@@ -17,7 +17,7 @@
                 <div class="col-md-12">
                     <div class="navbar-header">
                         <!--logo start-->
-                        <a href="index.html" tppabs="index.html" class="navbar-brand">
+                        <a href="javascript:void(0);" onclick="loadContent('/web/home')" class="navbar-brand">
                             <span class="logo"><img src="${ctx}/resources/imgs/logo-dark.png" alt=""/></span>
                         </a>
                     </div>
@@ -55,9 +55,9 @@
 
     function loadContent(url) {
         //清空所有的js定时周期任务
-        if(url.indexOf("statistics")!=-1){
-            for(var item in allIntervalIds){
-                clearInterval(allIntervalIds[item]);
+        if(url.indexOf("statistics")==-1){
+            for(var index in allIntervalIds){
+                clearInterval(allIntervalIds[index]);
             }
         }
         $.ajax({
