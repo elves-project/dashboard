@@ -79,7 +79,11 @@
 
         visData[6]={id:7,label:"Agent\n 在线("+agentData+")",color:'#87CEFF'};
 
-        visData[7]={id:8,label:'Dashboard\n 在线',color:'#7FFFD4'};
+        if(data.dashboard!=undefined){
+            visData[7]={id:8,label: 'Dashboard\n 在线('+data.dashboard+')',color:'#7FFFD4'};
+        }else{
+            visData[7]={id:8,label: 'Dashboard\n 离线',color:'#FF6A6A'};
+        }
 
         var nodes = new vis.DataSet(visData);
 

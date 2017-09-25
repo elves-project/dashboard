@@ -70,6 +70,7 @@ public class DashboardServiceImpl implements DashboardService{
             List<String> heartbeatList=ZookeeperExcutor.getClient().getChildren().forPath("/elves_v2/heartbeat");
             List<String> supervisorList=ZookeeperExcutor.getClient().getChildren().forPath("/elves_v2/supervisor");
             List<String> apiList=ZookeeperExcutor.getClient().getChildren().forPath("/elves_v2/openapi");
+			List<String> dashboardList=ZookeeperExcutor.getClient().getChildren().forPath("/elves_v2/dashboard");
 
             Map<String,Integer> st=new HashMap<String,Integer>();
             if(cronList!=null&&cronList.size()>0){
@@ -82,7 +83,16 @@ public class DashboardServiceImpl implements DashboardService{
                 st.put("scheduler",schedulerList.size());
             }
             if(heartbeatList!=null&&heartbeatList.size()>0){
-                st.put("heartbeat",heartbeatList.size());
+                int size=0;
+                for(String str:heartbeatList){
+                    if("agent".equals(str)){
+                        continue;
+                    }
+                    size++;
+                }
+                if(size!=0){
+                    st.put("heartbeat",size);
+                }
             }
             if(supervisorList!=null&&supervisorList.size()>0){
                 st.put("supervisor",supervisorList.size());
@@ -90,6 +100,10 @@ public class DashboardServiceImpl implements DashboardService{
             if(apiList!=null&&apiList.size()>0){
                 st.put("openapi",apiList.size());
             }
+			if(dashboardList!=null&&dashboardList.size()>0){
+                st.put("dashboard",dashboardList.size());
+            }
+
             data.put("status",st);
         }catch (Exception e){
             LOG.error("get elves module status error : "+ExceptionUtil.getStackTraceAsString(e));
