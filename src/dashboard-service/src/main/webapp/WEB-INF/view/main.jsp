@@ -18,7 +18,7 @@
                     <div class="navbar-header">
                         <!--logo start-->
                         <a href="javascript:void(0);" onclick="loadContent('/web/home')" class="navbar-brand">
-                            <span class="logo"><img src="${ctx}/resources/imgs/logo-dark.png" alt=""/></span>
+                            <span class="logo"><img src="${ctx}/resources/imgs/logo1.png" alt=""/></span>
                         </a>
                     </div>
                 </div>
@@ -37,7 +37,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-12" style="text-align: center;">
-                    Copyright © 2004-2017, 光宇游戏系统部, All Rights Reserved.
+                     ©2017 Elves Dashboard Module.
                 </div>
             </div>
         </div>
