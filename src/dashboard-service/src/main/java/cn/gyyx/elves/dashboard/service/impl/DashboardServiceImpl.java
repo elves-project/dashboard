@@ -64,13 +64,13 @@ public class DashboardServiceImpl implements DashboardService{
         }
 
         try {
-            List<String> cronList=ZookeeperExcutor.getClient().getChildren().forPath("/elves_v2/cron");
-            List<String> queueList=ZookeeperExcutor.getClient().getChildren().forPath("/elves_v2/queue");
-            List<String> schedulerList=ZookeeperExcutor.getClient().getChildren().forPath("/elves_v2/scheduler");
-            List<String> heartbeatList=ZookeeperExcutor.getClient().getChildren().forPath("/elves_v2/heartbeat");
-            List<String> supervisorList=ZookeeperExcutor.getClient().getChildren().forPath("/elves_v2/supervisor");
-            List<String> apiList=ZookeeperExcutor.getClient().getChildren().forPath("/elves_v2/openapi");
-			List<String> dashboardList=ZookeeperExcutor.getClient().getChildren().forPath("/elves_v2/dashboard");
+            List<String> cronList=ZookeeperExcutor.getClient().getChildren().forPath(PropertyLoader.ZOOKEEPER_ROOT+"/cron");
+            List<String> queueList=ZookeeperExcutor.getClient().getChildren().forPath(PropertyLoader.ZOOKEEPER_ROOT+"/queue");
+            List<String> schedulerList=ZookeeperExcutor.getClient().getChildren().forPath(PropertyLoader.ZOOKEEPER_ROOT+"/scheduler");
+            List<String> heartbeatList=ZookeeperExcutor.getClient().getChildren().forPath(PropertyLoader.ZOOKEEPER_ROOT+"/heartbeat");
+            List<String> supervisorList=ZookeeperExcutor.getClient().getChildren().forPath(PropertyLoader.ZOOKEEPER_ROOT+"/supervisor");
+            List<String> apiList=ZookeeperExcutor.getClient().getChildren().forPath(PropertyLoader.ZOOKEEPER_ROOT+"/openapi");
+			List<String> dashboardList=ZookeeperExcutor.getClient().getChildren().forPath(PropertyLoader.ZOOKEEPER_ROOT+"/dashboard");
 
             Map<String,Integer> st=new HashMap<String,Integer>();
             if(cronList!=null&&cronList.size()>0){
